@@ -1,15 +1,9 @@
 Q1. Quais as diferenças entre os barramentos de dados e de endereços?
-
 O barramento de endereço pode ter mais bits que o barramento de dados.
-
-
 Q2. Quais são as diferenças entre as memórias RAM e ROM?
-
 RAM: (Acesso aleatório, ou seja, con segue acessar qualquer posição de memória aleatoriamente) É uma memória volátil, o conteúdo é apagado quando se desliga a alimentação de energia.
      *Utilizada para informações que são importantes temporariamente.
-
 ROM: Memória só de leitura. é uma memória não-volátil, ou seja, mantém o conteúdo quando acaba a energia.
-
 Q3. Considere o código abaixo, de 12 linhas:
 
     1.   #include <stdio.h>
@@ -27,12 +21,9 @@ Q3. Considere o código abaixo, de 12 linhas:
 
 Para este código, responda:
 	(a) A variável 'i' é armazenada na memória RAM ou ROM? Por quê?
-
-	- Na memória RAM, pois a variável 'i' é utilizada para apenas uma instrução rápida e depois não é mais necessária.
-		
+	- Na memória RAM, pois a variável 'i' é utilizada para apenas uma instrução rápida e depois não é mais necessária ao término da compilação.		
 	(b) O programa compilado a partir deste código é armazenado na memória RAM ou ROM? Por quê?
-
-
+	- Na memória RAM, pois ao sair do programa o mesmo tem de ser compilado novamente para realizar tal operação.
 Q4. Quais são as diferenças, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
 - As diferenças entre as duas arquiteturas é que a arquitetura de Harvard separa o armazenamento e o trafego das instruções da CPU e dos dados em duas unidades distintas de memória, enquanto a Von Neumann utiliza o mesmo espaço de memória para ambos.
 - Arquitetura tipo Harvard: Caminhos de dados e de instrução distintos, dessa forma, seus componentes internos também estão dispostos em lugares distintos, o que a torna mais rápida porem mais complexa.
@@ -46,3 +37,4 @@ Q5. Considere a variável inteira 'i', armazenando o valor 0x8051ABCD. Se 'i' é
 	Endereço          0x0200 0x0201 0x0202 0x0203	
 	Big Endian          80     51     AB     CD
 Q6. Sabendo que o processador do MSP430 tem registradores de 16 bits, como ele soma duas variáveis de 32 bits?
+Dividindo cada variável de 32 bits em dois,  A1, A2, B1, B2, e então soma-se os conteúdos dos registradores A2 com e A1 com B1.
