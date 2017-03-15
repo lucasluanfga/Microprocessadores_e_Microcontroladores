@@ -37,4 +37,4 @@ Q5. Considere a variável inteira 'i', armazenando o valor 0x8051ABCD. Se 'i' é
 	Endereço          0x0200 0x0201 0x0202 0x0203	
 	Big Endian          80     51     AB     CD
 Q6. Sabendo que o processador do MSP430 tem registradores de 16 bits, como ele soma duas variáveis de 32 bits?
-Dividindo cada variável de 32 bits em dois,  A1, A2, B1, B2, e então soma-se os conteúdos dos registradores A2 com e A1 com B1.
+Dividindo cada variável de 32 bits em dois,  A1, A2, B1, B2, e então soma-se os conteúdos dos registradores A2 com B2 e A1 com B1, de forma que havendo um carry, o mesmo é acrescentado a soma dos registradores A1 com B1 para que a soma fique correta.
