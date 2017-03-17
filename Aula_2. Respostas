@@ -23,7 +23,7 @@ Para este código, responda:
 	(a) A variável 'i' é armazenada na memória RAM ou ROM? Por quê?
 	- Na memória RAM, pois a variável 'i' é utilizada para apenas uma instrução rápida e depois não é mais necessária ao término da compilação.		
 	(b) O programa compilado a partir deste código é armazenado na memória RAM ou ROM? Por quê?
-	- Na memória RAM, pois ao sair do programa o mesmo tem de ser compilado novamente para realizar tal operação.
+	- Na memória ROM, pois ao compilar o código, o mesmo gera um arquivo que é salvo na memória.
 Q4. Quais são as diferenças, vantagens e desvantagens das arquiteturas Harvard e Von Neumann?
 - As diferenças entre as duas arquiteturas é que a arquitetura de Harvard separa o armazenamento e o trafego das instruções da CPU e dos dados em duas unidades distintas de memória, enquanto a Von Neumann utiliza o mesmo espaço de memória para ambos.
 - Arquitetura tipo Harvard: Caminhos de dados e de instrução distintos, dessa forma, seus componentes internos também estão dispostos em lugares distintos, o que a torna mais rápida porem mais complexa.
