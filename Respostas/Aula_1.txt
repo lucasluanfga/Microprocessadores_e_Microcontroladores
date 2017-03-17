@@ -1,0 +1,19 @@
+- O que são sistemas embarcados? 
+R: Sistemas embarcados são um conjunto de microcontroladores/processadores (sistema computacional) a fim de resolver problemas/necessidades impostas em um projeto, ou seja, a fim de resolver uma determinada função específica.
+- O que são sistemas microprocessados?
+R: Sistemas que são capazes de realizar tomadas de decisões com base ne informações coletadas, como por exemplo, de um determinado sensor analógio.
+- Apresente aplicações de sistemas embarcados:
+  - Para a indústria automotiva
+    * Sistema de ré de um carro.
+    * Acionamento do Airbag.
+    * Painel de controle, indicando como por exemplo, a pressão do motor, nível de copmbustível, etc.
+  
+  - Para eletrodomésticos
+    * Processamento da temperatura de um chuveiro elétrico.
+    * Setar a temperatura de um fogão elétrico.
+  
+- Cite arquiteturas possíveis e as diferenças entre elas?
+  Algumas arquiteturas possíveis são a RISC e CISC, uma vez que arquiteturas RISC tem por objetivo unidades de controle mais simples, rápidas e baratas, optando por instruções mais simples possíveis, onde dessa forma consumirá menos energia, enquanto que arquiteturas CISC optam por unidades de controle mais complexas e poderosas, de onde se tornam mais caras e gastam mais energia.
+
+- Porquê usamos o MSP430 na disciplina ao invés de outro microcontrolador?
+  Devido ao tamanho, acessibilidade, capacidade de processamento, etc. Um dos principais objetivos na disiplina com o uso do MSP430 é de entender melhor a parte de codificação e entendimento do que se passa ao realizar um projeto, no qual não existe funções "prontas", onde o aluno possa criá-las e entender seu funcionamento e realizar operações que não são suportadas em um arduino por exemplo.
