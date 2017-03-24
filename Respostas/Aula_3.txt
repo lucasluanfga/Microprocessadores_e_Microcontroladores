@@ -4,21 +4,56 @@ Data: 22/03/2017
 	(a) Somente setar o bit menos significativo de 'a'.
       a |= 0x01;
 	(b) Somente setar dois bits de 'a': o menos significativo e o segundo menos significativo.
-      a |= 0x03;
+      a |= 0x03;	operação OR
 	(c) Somente zerar o terceiro bit menos significativo de 'a'.
       a &= 0xFB;
 	(d) Somente zerar o terceiro e o quarto bits menos significativo de 'a'.
-      a &= 0xF3;
+      a &= 0xF3;	operação and	
 	(e) Somente inverter o bit mais significativo de 'a'.
-      a ^= 0xA0;
-      
+      a ^= 0x80;	operação XOR
 	(f) Inverter o nibble mais significativo de 'a', e setar o nibble menos significativo de 'a'. 
+	a ^= 0x80;
+	a |= 0x01;
 
 2. Considerando a placa Launchpad do MSP430, escreva o código em C para piscar os dois LEDs ininterruptamente.
 
-
+//Hello world
+#include <msp430g2553.h> //Header específico para o MSP430.
+void main(void){
+	WDTCTL = WDTPW | WDTHOLD; //Interrompendo o watchdog timer.
+	P1DIR = 0x41; //Configurar os pinos 0 e 6 como saída (0x41 = 0b01000001), que estão conectados aos dois LEDs do Launchpad.
+	
+	for(;;){ //Loop infinito
+	P1OUT = 0x41; // Leva os pinos 0 e 6 para Vcc (0x41 = 0b01000001), ligando os dois LEDs.
+	}
+}
 
 3. Considerando a placa Launchpad do MSP430, escreva o código em C para piscar duas vezes os dois LEDs sempre que o usuário pressionar o botão.
+//Piscar duas vezes os dois LEDS do MSP430 sempre
+//que o botão for pressionado
+#include <msp430g2553.h>
+#include <time.h>	//Biblioteca que contém a função sleep
+#define BTN BIT2	//Definições para clarear o código
+#define LED1 BIT0	//Definições para clarear o código
+#define LED2 BIT6	//Definições para clarear o código
+void main(void){
+WDTCTL = WDTPW | WDTHOLD;	//Interrompendo o watchdog timer
+P1OUT = 0;			// Começando com todos os LEDs desligados
+P1DIR = LED1 + LED2;		//LED1 e LED2 como saídas, BTN como entrada
+int contador; // Variável de controle do loop
+for(contador = 2; contador >= 1 ; contador--){
+	if(P1IN & BTN == 0){
+		P1OUT |= LED1 + LED2;	//Liga os LEDs enquanto o botão estiver pressionado
+		sleep(500);		//O programa espera pelo tempo especificado em milissegundos
+		P1OUT &= ~(LED1 + LED2);	//Apaga os leds;
+		sleep(500);
+		P1OUT |= LED1 + LED2;
+		sleep(500);
+		P1OUT &= ~(LED1 + LED2); 
+	else
+		P1OUT &= ~(LED1 + LED2);
+	}
+}
 
 4. Considerando a placa Launchpad do MSP430, faça uma função em C que pisca os dois LEDs uma vez.
 
