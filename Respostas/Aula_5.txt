@@ -109,7 +109,7 @@ loop_for2:	cmp #0, R7	; compara R7 com 0
 		rla R11
 		mov.w R11, R12
 		add.w R9, R12
-		mov.w R12, 0(R12)
+		mov.w R11, 0(R12)
 		dec.w R7
 		jmp loop_for2
 exit:
