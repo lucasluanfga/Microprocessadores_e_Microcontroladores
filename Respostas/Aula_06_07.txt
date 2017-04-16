@@ -30,8 +30,64 @@ O protótipo da função é:
 2. (a) Escreva uma função em C que calcule 'x' elevado à 'N'-ésima potência, seguindo o seguinte protótipo: 
 
 	int Potencia(int x, int N);
+	
+	{
+		int sign = 0, p = 1;
+		if(N < 0){
+			N = -N;				% Se o expoente for negativo
+			sign = 1;			% Variavel que axiliar
+		}
+		while(N > 0){
+			p = mult_signed(x,p);		% Chama a função que multiplica numeros com sinal
+			N--;				% Decrementa o expoente
+		}
+		if(sign == 1)
+			return div_signed(1, p);	% Se o expoente for negativo
+		else
+			return p;			% Se o expoente for positivo
+	}
+	
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. 'x' e 'n' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida no registrador R15.
+
+
+Potencia:		push R4
+			push R5
+			clr R4			; sign = 0
+			mov.w #1, R5		; p = 1
+			cmp #1, R14		; se for negativo, significa que o expoente é negativo
+			jl while_pot
+			
+			inv R14			; representando o numero em complemento de 2
+			inc R14			; representando o numero em complemento de 2
+			mov.w #1, R4		; sign = 1, expoente negativo
+			
+while_pot:		tst R14
+			jz while_pot_end	; caso o expoente for zero, pula
+			
+			push R15		; recupera os valores armazenados na pilha dos registradores
+			push R14		; recupera os valores armazenados na pilha dos registradores
+			mov.w R5, R14
+			call mult_signed
+			mov.w R15, R5
+			pop R14
+			pop R15
+			dec R14
+			jmp while_pot
+			
+while_pot_end:		cmp #1, R4
+			jne pot_end
+			mov.w #1, R15
+			mov.w R5, R14
+			call div_signed
+			pop R5
+			pop R4
+			ret
+	
+pot_end:		mov.w R5, R15
+			pop R5
+			pop R4
+			ret
 
 3. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula a divisão de 'a' por 'b', onde 'a', 'b' e o valor de saída são inteiros de 16 bits. 'a' e 'b' são fornecidos através dos registradores R15 e R14, respectivamente, e a saída deverá ser fornecida através do registrador R15.
 
