@@ -273,6 +273,50 @@ FIM_VETOR_CRESC:
 	
 O primeiro endereço do vetor 'a' deverá ser passado através do registrador R15, o primeiro endereço do vetor 'b' deverá ser passado através do registrador R14, e o tamanho do vetor deverá ser passado pelo registrador R13. A saída deverá ser fornecida no registrador R15.
 
+PROD_ESCALAR:
+        		push R12        	; ARMAZENA OS VALORES CONTIDOS NAS VARIAVEIS
+        		push R11        	; ARMAZENA OS VALORES CONTIDOS NAS VARIAVEIS
+        		push R10        	; ARMAZENA OS VALORES CONTIDOS NAS VARIAVEIS
+        		push R9			; ARMAZENA OS VALORES CONTIDOS NAS VARIAVEIS
+			
+        		clr R9          	; LIMPA OS REGISTRADORES
+        		clr R10        		; LIMPA OS REGISTRADORES
+        		clr R11        		; LIMPA OS REGISTRADORES
+        		clr R12        		; LIMPA OS REGISTRADORES
+       
+FOR_PROD_ESCALAR:
+        		cmp R12,R13     	; COMPARA PARA VER SE A VARIAVEL AUXILIAR É MAIOR QUE O TAMANHO DO VETOR
+        		jz  FIM_PROD_ESCALAR  	; SE FOR ZERO, PULA PARA O FINAL
+        
+        		rla R12               	; MULTIPLICA POR DOIS
+        		push R12              	; ARMAZENA ESSE VALOR PARA SER UTILIZADO NO CALCULO DO OUTRO VETOR
+        
+        		add.w R15,R12         	; INICIO DO VETOR + VARIAVEL PERCORREDORA DO VETOR
+        		add.w 0(R12),R11      	; ADICIONA O VALOR CONTIDO NA POSIÇÃO [X] EM R11
+        
+        		pop R12               	; RECUPERA A VARIAVEL AUXILAR
+        		push R12
+        
+        		add.w R14,R12        	; INICIO DO VETOR + VARIAVEL PERCORREDORA DO VETOR
+        		mov.w 0(R12),R10      	; ADICIONA O VALOR CONTIDO NA POSIÇÃO [X] EM R11
+        
+        		add.w R11,R9
+        		add.w R10,R9
+        
+        		pop R12               	; RECUPERA O VALOR CONTIDO EM R12
+        		rra R12               	; DIVIDE POR 2
+        		inc R12               	; INCREMENTA R12
+        
+        		jmp FOR_PROD_ESCALAR
+
+FIM_PROD_ESCALAR:
+        		mov.w R9,R15          	; MOVE O VALOR DO PRODUTO À R15
+        
+        		pop R9                	; RECUPERA OS VALORES CONTIDOS NAS VARIAVEIS
+        		pop R10               	; RECUPERA OS VALORES CONTIDOS NAS VARIAVEIS
+        		pop R11               	; RECUPERA OS VALORES CONTIDOS NAS VARIAVEIS
+        		pop R12               	; RECUPERA OS VALORES CONTIDOS NAS VARIAVEIS
+
 10. (a) Escreva uma função em C que indica se um vetor é palíndromo. Por exemplo:
 	[1 2 3 2 1] e [0 10 20 20 10 0] são palíndromos.
 	[5 4 3 2 1] e [1 2 3 2] não são.
