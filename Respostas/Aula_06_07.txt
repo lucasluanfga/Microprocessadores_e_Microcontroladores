@@ -279,5 +279,30 @@ O primeiro endereço do vetor 'a' deverá ser passado através do registrador R1
 Se o vetor for palíndromo, retorne o valor 1. Caso contrário, retorne o valor 0. O protótipo da função é:
 
 	int Palindromo(int vetor[ ], int tamanho);
+	{
+		int i=0, j=0, a=0;
+	
+		if(tamanho%2 == 0){
+			return 0;
+		}
+		else{
+			tamanho=tamanho-1;
+	
+			for(i=0;i<tamanho/2;i++){
+				Aux[i]=vetor[i];
+			}
+			for(i=0;i<tamanho/2;i++){
+				j=tamanho+1-i;
+				if(Aux[i]==vetor[j]){
+					a++;
+				}
+			}
+		}
+		if(a==tamanho){
+			return 1;
+		}
+		else 
+			return 0;
+	}
 
 (b) Escreva a sub-rotina equivalente na linguagem Assembly do MSP430. O endereço do vetor de entrada é dado pelo registrador R15, o tamanho do vetor é dado pelo registrador R14, e o resultado é dado pelo registrador R15.
