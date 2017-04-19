@@ -203,6 +203,72 @@ Considere o cálculo até o termo n = 20. O protótipo da função é double Exp
 [1 2 3 4 5] e [1 2 3 2] não estão.
 O primeiro endereço do vetor é fornecido pelo registrador R15, e o tamanho do vetor é fornecido pelo registrador R14. A saída deverá ser fornecida no registrador R15, valendo 1 quando o vetor estiver ordenado de forma decrescente, e valendo 0 em caso contrário.
 
+VETOR_DECRESC:
+        		push R13
+        		push R12
+        		push R11
+        		push R10
+        
+        		clr   R12
+        		clr   R13
+        		clr   R11
+       			clr   R10
+        
+        						; O VETOR SERÁ DADO POR R15 E O TAMANHO SERÁ DADO POR R14
+
+        		add.w R15,R12
+        
+        		mov.w 0(R12),R11    		; ARMAZENA O PRIMEIRO VALOR DO VETOR
+        		mov.w 2(R12),R10    		; ARMAZENA O SEGUNDO VALOR DO VETOR
+        
+        		cmp R10,R11          		; COMPARA PRA VER SE R15[0] > R15[1]
+        		jl  FIM_VETOR_CRESC  		; SE FOR MENOR, PULA PARA FIM_VETOR_CRESC
+        
+        		mov.w #1,R12
+        
+FOR_VETOR_DECRES:
+        
+        		inc R12
+        
+        		cmp R12,R14
+        		jz FIM_VETOR_DECRESC
+        
+        		rla R12
+        		mov.w R10,R11
+        
+        		mov.w R12,R10
+        		add.w R15,R10
+        
+        		mov.w 0(R10),R13
+        
+        		cmp R13,R11     
+        		jl FIM_VETOR_CRESC
+        
+        		mov.w R13,R10
+        
+        		rra R12
+			jmp FOR_VETOR_DECRES
+        
+FIM_VETOR_DECRESC:
+        		mov.w #1,R15  ;  É DECRESCENTE
+        		pop R10
+        		pop R11
+        		pop R12
+        		pop R13
+			ret
+        
+        
+FIM_VETOR_CRESC:
+       			mov.w #0,R15  ;  É CRESCENTE
+        		pop R10
+        		pop R11
+        		pop R12
+        		pop R13
+			ret
+
+
+
+
 9. Escreva uma sub-rotina na linguagem Assembly do MSP430 que calcula o produto escalar de dois vetores, 'a' e 'b':
 	
 O primeiro endereço do vetor 'a' deverá ser passado através do registrador R15, o primeiro endereço do vetor 'b' deverá ser passado através do registrador R14, e o tamanho do vetor deverá ser passado pelo registrador R13. A saída deverá ser fornecida no registrador R15.
