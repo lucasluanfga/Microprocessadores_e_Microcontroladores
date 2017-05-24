@@ -8,7 +8,73 @@ Data: 05/05/2017
 
 4. Defina a função void main(void){} para controlar 6 LEDs de uma árvore de natal usando o hardware da questão anterior. Acenda os LEDs de forma que um ser humano veja todos acesos ao mesmo tempo.
 
+int main(void)
+{   
+  
+    int aux = 0;          //variavel para ser em sequencia
+    
+    WDTCTL = WDTPW + WDTHOLD;	// Stop WDT
+    
+    while(aux==0){
+      P1DIR = CHPX1+CHPX2;      // habilita as saidas digitais
+      P1OUT = CHPX1;            // liga led 1
+      P1OUT = CHPX2;            // liga led 2
+      
+      P1DIR = CHPX3+CHPX2;    // habilita as saidas digitais
+      P1OUT = CHPX2;          //  liga led 3
+      P1OUT = CHPX3;          // liga led 4
+      P1DIR = CHPX1+CHPX3;    // habilita as saidas digitais
+      P1OUT = CHPX1;          // liga led 5
+      P1OUT = CHPX3;          // liga led 6
+    
+    }
+}
+
 5. Defina a função void main(void){} para controlar 6 LEDs de uma árvore de natal usando o hardware da questão 3. Acenda os LEDs de forma que um ser humano veja os LEDs L1 e L2 acesos juntos por um tempo, depois os LEDs L3 e L4 juntos, e depois os LEDs L5 e L6 juntos.
+//
+//#include "msp430g2553.h"
+//
+//#define CHPX1 BIT0
+//#define CHPX2 BIT1
+//#define CHPX3 BIT2
+//#define CHPXS (CHPX1+CHPX2+CHPX3)
+//
+//void charlie_on(char CHPX_OUT, char CHPX_ON)
+//{
+//  P1OUT &=~CHPXS;
+//  P1DIR &=~CHPXS;
+//  P1DIR |= CHPX_OUT;
+//  P1OUT |= CHPX_ON;
+//
+//}
+
+int main( void )
+{
+  // Stop watchdog timer to prevent time out reset
+  WDTCTL = WDTPW + WDTHOLD;
+
+  unsigned int 	i;
+  
+  while(1){
+    for(i=0;i<0xFFFF;i++){
+      charlie_on(CHPX1+CHPX2,CHPX1);
+      charlie_on(CHPX1+CHPX2,CHPX2);
+    }
+    
+    for(i=0;i<0xFFFF;i++){
+      charlie_on(CHPX3+CHPX2,CHPX2);
+      charlie_on(CHPX3+CHPX2,CHPX3);
+    }
+    
+    for(i=0;i<0xFFFF;i++){
+      charlie_on(CHPX1+CHPX3,CHPX1);
+      charlie_on(CHPX1+CHPX3,CHPX3);
+    }
+  
+  }
+  return 0;
+}
+
 
 6. Defina a função void EscreveDigito(volatile char dig); que escreve um dos dígitos 0x0-0xF em um único display de 7 segmentos via porta P1, baseado na figura abaixo. Considere que em outra parte do código os pinos P1.0-P1.6 já foram configurados para corresponderem aos LEDs A-G, e que estes LEDs possuem resistores externos para limitar a corrente.
 
@@ -21,6 +87,116 @@ Data: 05/05/2017
  E <== |   | ==> C
        |   |
  	    ---  ==> D
+	    
+	    
+//#define LA BIT0
+//#define LB BIT1
+//#define LC BIT2
+//#define LD BIT3
+//#define LE BIT4
+//#define LF BIT5
+//#define LG BIT6
+//#define DISPLAY (BIT0+BIT1+BIT2+BIT3+BIT4+BIT5+BIT6)
+
+void EscreveDigito(volatile char dig){
+  
+  if (dig == '0'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LD+LE+LF);
+      P1OUT |= (LA+LB+LC+LD+LE+LF);
+  }
+  else if (dig == '1'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LB+LC);
+      P1OUT |= (LB+LC);
+  }
+  else if (dig == '2'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LG+LD+LE);
+      P1OUT |= (LA+LB+LG+LD+LE);
+  }
+  else if (dig == '3'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LD+LG);
+      P1OUT |= (LA+LB+LC+LD+LG);
+  }
+  else if (dig == '4'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LG+LB+LC+LF);
+      P1OUT |= (LG+LB+LC+LF);
+  }
+  else if (dig == '5'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LG+LC+LD+LF);
+      P1OUT |= (LA+LG+LC+LD+LF);
+  }
+  else if (dig == '6'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LG+LC+LD+LE+LF);
+      P1OUT |= (LA+LG+LC+LD+LE+LF);
+  }
+  else if (dig == '7'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LG);
+      P1OUT |= (LA+LB+LC+LG);
+  }
+  else if (dig == '8'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LD+LE+LF+LG);
+      P1OUT |= (LA+LB+LC+LD+LE+LF+LG);
+  }
+  else if (dig == '9'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LD+LG+LF);
+      P1OUT |= (LA+LB+LC+LD+LG+LF);
+  }
+  else if (dig == 'A'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LG+LE+LF);
+      P1OUT |= (LA+LB+LC+LG+LE+LF);
+  }
+  else if (dig == 'B'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LD+LE+LF+LG);
+      P1OUT |= (LA+LB+LC+LD+LE+LF+LG);
+  }
+  else if (dig == 'C'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LF+LD+LE+LF);
+      P1OUT |= (LA+LF+LD+LE+LF);
+  }
+  else if (dig == 'D'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LD+LE+LF);
+      P1OUT |= (LA+LB+LC+LD+LE+LF);
+  }
+  else if (dig == 'E'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LB+LC+LD+LE+LF);
+      P1OUT |= (LA+LB+LC+LD+LE+LF);
+  }
+  else if (dig == 'F'){
+      P1OUT &=~ DISPLAY;
+      P1DIR &=~ DISPLAY;
+      P1DIR |= (LA+LG+LD+LE+LF);
+      P1OUT |= (LA+LG+LD+LE+LF);
+  }
+
 
 7. Multiplexe 2 displays de 7 segmentos para apresentar a seguinte sequência em loop:
 	00 - 11 - 22 - 33 - 44 - 55 - 66 - 77 - 88 - 99 - AA - BB - CC - DD - EE - FF
